@@ -1,0 +1,22 @@
+[
+{
+    "id": "706396ec-143a-4603-a336-13e9ad399db6",
+    "Nombre": "Cálculo diferencial",
+    "Clase": "a0c5b971-956e-4c94-a876-aba7237edc6d"
+},
+{
+    "id": "3e15f761-aa80-4881-932a-20099474d8be",
+    "Nombre": "Cálculo integral",
+    "Clase": "a0c5b971-956e-4c94-a876-aba7237edc6d"
+},
+{
+    "id": "ffd80fbf-b9c3-4b20-abd5-f72d9878f198",
+    "Nombre": "Promedio",
+    "Clase": "c975357a-9182-4b6e-9e6f-5cd126c8cebc"
+},
+{
+    "id": "9a8d3e86-93ce-44f4-82d0-086c7d7706d6",
+    "Nombre": "Moda",
+    "Clase": "c975357a-9182-4b6e-9e6f-5cd126c8cebc"
+}
+]

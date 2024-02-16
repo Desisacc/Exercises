@@ -1,0 +1,34 @@
+[
+{
+    "id": "4662ff52-25b8-4090-9aee-65dd91230c64",
+    "Nombre": "Derivadas",
+    "Descripcion": "Obtén la derivada de $x^$",
+    "TipoDeRespuesta": "Abierta",
+    "Explicacion": "d/dx($x^$) = $*$x^($-1) = $x^$",
+    "Actividad": "706396ec-143a-4603-a336-13e9ad399db6"
+},
+{
+    "id": "96760e9a-6fe2-4fee-bb9e-ea3e8c6cb48e",
+    "Nombre": "Integrales",
+    "Descripcion": "Obtén la integral de $x^$",
+    "TipoDeRespuesta": "Abierta",
+    "Explicacion": "integral($x^$) = $x^($+1)/($+1) = $x^$",
+    "Actividad": "3e15f761-aa80-4881-932a-20099474d8be"
+},
+{
+    "id": "94cfe62a-b037-45b7-b057-99ca6fa1af3b",
+    "Nombre": "Promedio",
+    "Descripcion": "Definición de promedio",
+    "TipoDeRespuesta": "Cerrada",
+    "Explicacion": "Promedio es la suma de todos los elementos dividida entre la cantidad de elementos",
+    "Actividad": "ffd80fbf-b9c3-4b20-abd5-f72d9878f198"
+},
+{
+    "id": "38426e75-6bf3-433e-b827-1993b29b3a7a",
+    "Nombre": "Moda",
+    "Descripcion": "Definición de moda",
+    "TipoDeRespuesta": "Cerrada",
+    "Explicacion": "Moda es el elemento más común",
+    "Actividad": "9a8d3e86-93ce-44f4-82d0-086c7d7706d6"
+}
+]
