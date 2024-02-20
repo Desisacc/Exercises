@@ -1,4 +1,5 @@
 import { ObtenerBloque, ObtenerProblemasDeBloque } from '/tabla.js'
+import { Evaluar } from '/formateo.js'
 
 let contenedorProblemas = document.getElementById('contenedorProblemas');
 
@@ -19,7 +20,6 @@ for (let i = 0; i < problemas.length; i++)
     {
         textoDescripcion = textoDescripcion.replace('$', problema.Valores[j]);
     }
-    console.log(problema.Valores);
     descripcion.textContent = textoDescripcion;
     contenedorProblemas.appendChild(descripcion);
 
@@ -82,14 +82,15 @@ for (let i = 0; i < problemas.length; i++)
     contenedorProblemas.appendChild(explicacion);
 }
 
-function ComprobarRespuesta(problema)
+async function ComprobarRespuesta(problema)
 {
     let esRespuestaCorrecta;
     if (bloque.TipoDeRespuesta === 'Abierta')
     {
         let input = document.getElementById('input ' + problema.id);
 
-        esRespuestaCorrecta = input.value === problema.Respuesta;
+        esRespuestaCorrecta = await Evaluar(input.value) === await Evaluar(problema.Respuesta)
+        //esRespuestaCorrecta = input.value === problema.Respuesta;
         if (esRespuestaCorrecta)
         {
             input.readOnly = true;

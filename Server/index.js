@@ -1,18 +1,47 @@
-const express = require('express');
+import express from 'express'
+import { simplify } from 'mathjs'
 
+import { createRequire } from 'node:module'
+const require = createRequire(import.meta.url);
 const clases = require('./jsons/clases.json');
 const actividades = require('./jsons/actividades.json');
 const bloques = require('./jsons/bloques.json');
 const problemas = require('./jsons/problemas.json');
 
-const PORT = process.env.PORT || 3000;
+import { FormatearDeURL } from './formateo.js'
 
+const PORT = process.env.PORT || 3000;
 const app = express();
 
 app.use((req, res, next) => {
     console.log('method: '+ req.method + '\nurl: ' + req.url + '\n')
     next();
 })
+
+// Test //
+
+app.get('/test.js', (req, res) => {
+    res.sendFile(process.cwd() + '/Client/test/test.js');
+})
+
+// Test //
+
+// Formateo //
+
+app.get('/formateo.js', (req, res) => {
+    res.sendFile(process.cwd() + '/Server/formateo.js')
+})
+
+app.get('/Evaluate/:formula', (req, res) => {
+    const { formula } = req.params;
+    let formulaFormateada = FormatearDeURL(formula);
+
+    let resultado = simplify(formulaFormateada);
+
+    res.send({ "resultado": resultado.toString() });
+})
+
+// Formateo //
 
 app.get('/tabla.js', (req, res) => {
     res.sendFile(process.cwd() + '/Client/tabla.js');
