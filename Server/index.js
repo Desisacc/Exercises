@@ -8,8 +8,6 @@ const actividades = require('./jsons/actividades.json');
 const bloques = require('./jsons/bloques.json');
 const problemas = require('./jsons/problemas.json');
 
-import { FormatearDeURL } from './formateo.js'
-
 const PORT = process.env.PORT || 3000;
 const app = express();
 
@@ -34,9 +32,14 @@ app.get('/formateo.js', (req, res) => {
 
 app.get('/Evaluate/:formula', (req, res) => {
     const { formula } = req.params;
-    let formulaFormateada = FormatearDeURL(formula);
 
-    let resultado = simplify(formulaFormateada);
+    let resultado;
+    try {
+        resultado = simplify(formula);
+    } catch(error) {
+        resultado = 'La fórmula no se pudo evaluar';
+        console.log(resultado);
+    }
 
     res.send({ "resultado": resultado.toString() });
 })

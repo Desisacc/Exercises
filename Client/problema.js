@@ -1,5 +1,5 @@
 import { ObtenerBloque, ObtenerProblemasDeBloque } from '/tabla.js'
-import { Evaluar } from '/formateo.js'
+import { Simplificar } from '/formateo.js'
 
 let contenedorProblemas = document.getElementById('contenedorProblemas');
 
@@ -13,14 +13,16 @@ for (let i = 0; i < problemas.length; i++)
 {
     let problema = problemas[i];
 
+    // Generar valores aleatorios si es pregunta al azar
+    if (bloque.TipoDeRespuesta === 'Abierta' && problema.hasOwnProperty('Aleatorio') && problema.Aleatorio === true)
+    {
+        await GenerarValoresDeProblema(problema);
+    }
+
     // Descripción
     let descripcion = document.createElement('p');
-    let textoDescripcion = bloque.Descripcion;
-    for (let j = 0; j < problema.Valores.length; j++)
-    {
-        textoDescripcion = textoDescripcion.replace('$', problema.Valores[j]);
-    }
-    descripcion.textContent = textoDescripcion;
+    descripcion.textContent = EscribirDescripcion(problema);
+    descripcion.id = 'descripcion ' + problema.id;
     contenedorProblemas.appendChild(descripcion);
 
     // Opciones e input
@@ -29,8 +31,35 @@ for (let i = 0; i < problemas.length; i++)
         let input = document.createElement('input');
         input.placeholder = 'Escriba la respuesta aquí...';
         input.id = 'input ' + problema.id;
-
         contenedorProblemas.appendChild(input);
+
+        if (problema.hasOwnProperty('Aleatorio') && problema.Aleatorio)
+        {
+            let botonReset = document.createElement('button');
+            botonReset.textContent = 'Intentar otro';
+            botonReset.addEventListener('click', async () => {
+                await GenerarValoresDeProblema(problema);
+                document.getElementById('descripcion ' + problema.id).textContent = EscribirDescripcion(problema);
+                
+                let explicacion = document.getElementById('explicacion ' + problema.id);
+                explicacion.textContent = EscribirExplicacion(problema);
+                explicacion.style.display = 'none';
+
+                document.getElementById('outputRespuesta ' + problema.id).textContent = '';
+
+                let input = document.getElementById('input ' + problema.id);
+                input.value = '';
+                input.readOnly = false;
+
+                let botonEnviar = document.getElementById('botonEnviar ' + problema.id);
+                botonEnviar.disabled = false;
+
+                let botonExplicacion = document.getElementById('botonExplicacion ' + problema.id);
+                botonExplicacion.disabled = false;
+            });
+
+            contenedorProblemas.appendChild(botonReset);
+        }
     }
     else
     {
@@ -71,12 +100,7 @@ for (let i = 0; i < problemas.length; i++)
 
     // Explicación
     let explicacion = document.createElement('p');
-    let textoExplicacion = bloque.Explicacion;
-    for (let j = 0; j < problema.ValoresExplicacion.length; j++)
-    {
-        textoExplicacion = textoExplicacion.replace('$', problema.ValoresExplicacion[j]);
-    }
-    explicacion.textContent = textoExplicacion;
+    explicacion.textContent = EscribirExplicacion(problema);
     explicacion.style.display = 'none';
     explicacion.id = 'explicacion ' + problema.id;
     contenedorProblemas.appendChild(explicacion);
@@ -89,12 +113,19 @@ async function ComprobarRespuesta(problema)
     {
         let input = document.getElementById('input ' + problema.id);
 
-        esRespuestaCorrecta = await Evaluar(input.value) === await Evaluar(problema.Respuesta)
-        //esRespuestaCorrecta = input.value === problema.Respuesta;
-        if (esRespuestaCorrecta)
+        if (input.value.length > 0)
         {
-            input.readOnly = true;
-        }        
+            esRespuestaCorrecta = await Simplificar(input.value) === problema.Respuesta;
+            if (esRespuestaCorrecta)
+            {
+                input.readOnly = true;
+                input.value = problema.Respuesta;
+            }
+        }
+        else
+        {
+            esRespuestaCorrecta = false;
+        }   
     }
     else
     {
@@ -129,7 +160,14 @@ async function ComprobarRespuesta(problema)
     }
     else
     {
-        document.getElementById('outputRespuesta ' + problema.id).textContent = 'Incorrecto';
+        if (bloque.TipoDeRespuesta === 'Abierta' && problema.hasOwnProperty('Aleatorio') && problema.Aleatorio && await Simplificar(document.getElementById('input ' + problema.id).value) === 'La fórmula no se pudo evaluar')
+        {
+            document.getElementById('outputRespuesta ' + problema.id).textContent = 'La fórmula no se pudo evaluar';
+        }
+        else
+        {
+            document.getElementById('outputRespuesta ' + problema.id).textContent = 'Incorrecto';
+        }
     }
 }
 
@@ -156,4 +194,54 @@ function MostrarRespuesta(problema)
     document.getElementById('botonExplicacion ' + problema.id).disabled = true;
     document.getElementById('botonEnviar ' + problema.id).disabled = true;
     document.getElementById('outputRespuesta ' + problema.id).textContent = '';
+}
+
+function EscribirDescripcion(problema)
+{
+    let textoDescripcion = bloque.Descripcion;
+    if (problema.hasOwnProperty('Valores'))
+    {
+        for (let j = 0; j < problema.Valores.length; j++)
+        {
+            textoDescripcion = textoDescripcion.replace('$', problema.Valores[j]);
+        }
+    }
+    return textoDescripcion;
+}
+
+function EscribirExplicacion(problema)
+{
+    let textoExplicacion = bloque.Explicacion;
+    if (problema.hasOwnProperty('ValoresExplicacion'))
+    {
+        for (let j = 0; j < problema.ValoresExplicacion.length; j++)
+        {
+            textoExplicacion = textoExplicacion.replace('$', problema.ValoresExplicacion[j]);
+        }
+    }
+    return textoExplicacion;
+}
+
+async function GenerarValoresDeProblema(problema)
+{
+    problema.Valores = [];
+    problema.Respuesta = problema.FormulaRespuesta;
+    problema.ValoresExplicacion = JSON.parse(JSON.stringify(problema.FormulaValoresExplicacion));
+
+    for (let j = 0; j < problema.RangoDeValoresAleatorios.length; j++)
+    {
+        problema.Valores.push(Math.floor(problema.RangoDeValoresAleatorios[j][0] + Math.random() * problema.RangoDeValoresAleatorios[j][1]).toString());
+        problema.Respuesta = problema.Respuesta.replaceAll('[' + j.toString() + ']', problema.Valores[j]);
+
+        for (let k = 0; k < problema.FormulaValoresExplicacion.length; k++)
+        {
+            problema.ValoresExplicacion[k] = problema.ValoresExplicacion[k].replaceAll('[' + j.toString() + ']', problema.Valores[j]);
+        }
+    }
+
+    problema.Respuesta = await Simplificar(problema.Respuesta);
+    for (let k = 0; k < problema.FormulaValoresExplicacion.length; k++)
+    {
+        problema.ValoresExplicacion[k] = await Simplificar(problema.ValoresExplicacion[k]);
+    }
 }
