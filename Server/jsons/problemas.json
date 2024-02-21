@@ -1,18 +1,10 @@
 [
 {
-    "id": "298869e3-9efa-4a6a-8604-fecbf72d14db",
-    "Valores": ["2", "3"],
-    "Respuesta": "6*x^2",
-    "Opciones": [],
-    "ValoresExplicacion": ["2", "3", "3", "2", "3", "6", "2"],
-    "Bloque": "4662ff52-25b8-4090-9aee-65dd91230c64"
-},
-{
     "id": "77d61819-d052-4219-bb2c-1fa6bc04ed79",
-    "Valores": ["1", "2"],
-    "Respuesta": "2*x",
-    "Opciones": [],
-    "ValoresExplicacion": ["2", "3", "3", "2", "3", "6", "2"],
+    "Aleatorio": true,
+    "RangoDeValoresAleatorios": [[1, 4], [2, 3]],
+    "FormulaRespuesta": "[1] * [0] * x ^ ([1]-1)",
+    "FormulaValoresExplicacion": ["[0]", "[1]", "[1]", "[0]", "[1]", "[0]*[1]", "[1]-1"],
     "Bloque": "4662ff52-25b8-4090-9aee-65dd91230c64"
 },
 
@@ -20,26 +12,21 @@
     "id": "57cd88d6-168b-4835-959f-6b010e1749c4",
     "Valores": ["6", "2"],
     "Respuesta": "2*x^3",
-    "Opciones": [],
     "ValoresExplicacion": ["6", "2", "6", "2", "2", "2", "3"],
     "Bloque": "96760e9a-6fe2-4fee-bb9e-ea3e8c6cb48e"
 },
 
 {
     "id": "63e708f3-4936-4a68-bcc9-8e4366f58aec",
-    "Valores": [],
     "Respuesta": "2",
     "Opciones": ["Elemento más común", "Suma de los elementos dividido entre la cantidad de los elementos"],
-    "ValoresExplicacion": [],
     "Bloque": "94cfe62a-b037-45b7-b057-99ca6fa1af3b"
 },
 
 {
     "id": "f6b10d34-bcb9-401f-a5e7-69b643639200",
-    "Valores": [],
     "Respuesta": "1",
     "Opciones": ["Elemento más común", "Suma de los elementos dividido entre la cantidad de los elementos"],
-    "ValoresExplicacion": [],
     "Bloque": "38426e75-6bf3-433e-b827-1993b29b3a7a"
 }
 ]

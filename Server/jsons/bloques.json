@@ -2,18 +2,18 @@
 {
     "id": "4662ff52-25b8-4090-9aee-65dd91230c64",
     "Nombre": "Derivadas",
-    "Descripcion": "Obtén la derivada de $*x^$",
+    "Descripcion": "Obtén la derivada de $ * x ^ $",
     "TipoDeRespuesta": "Abierta",
-    "Explicacion": "d/dx($*x^$) = $*$*x^($-1) = $*x^$",
+    "Explicacion": "d/dx($ * x ^ $) = $ * $ * x ^ ($-1) = $ * x ^ $",
     "Actividad": "706396ec-143a-4603-a336-13e9ad399db6"
 },
 
 {
     "id": "96760e9a-6fe2-4fee-bb9e-ea3e8c6cb48e",
     "Nombre": "Integrales",
-    "Descripcion": "Obtén la integral de $*x^$",
+    "Descripcion": "Obtén la integral de $ * x ^ $",
     "TipoDeRespuesta": "Abierta",
-    "Explicacion": "integral($*x^$) = $*x^($+1)/($+1) = $*x^$",
+    "Explicacion": "integral($ * x ^ $) = $ * x ^ ($+1)/($+1) = $ * x ^ $",
     "Actividad": "3e15f761-aa80-4881-932a-20099474d8be"
 },
 
