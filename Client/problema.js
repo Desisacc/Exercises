@@ -109,13 +109,15 @@ for (let i = 0; i < problemas.length; i++)
 async function ComprobarRespuesta(problema)
 {
     let esRespuestaCorrecta;
+    let respuestaRecibida;
     if (bloque.TipoDeRespuesta === 'Abierta')
     {
         let input = document.getElementById('input ' + problema.id);
 
         if (input.value.length > 0)
         {
-            esRespuestaCorrecta = await Simplificar(input.value) === problema.Respuesta;
+            respuestaRecibida = await Simplificar(input.value);
+            esRespuestaCorrecta = respuestaRecibida === problema.Respuesta;
             if (esRespuestaCorrecta)
             {
                 input.readOnly = true;
@@ -124,20 +126,23 @@ async function ComprobarRespuesta(problema)
         }
         else
         {
+            respuestaRecibida = '';
             esRespuestaCorrecta = false;
         }   
     }
     else
     {
+        respuestaRecibida = '';
         esRespuestaCorrecta = false;
         for (let j = 0; j < problema.Opciones.length; j++)
         {
             let radioBoton = document.getElementById('radioBoton ' + j + ' ' + problema.id);
 
-            if (radioBoton.checked && (j + 1).toString() === problema.Respuesta)
+            if (radioBoton.checked)
             {
-                esRespuestaCorrecta = true;
-                break;          
+                respuestaRecibida = (j + 1).toString();
+                esRespuestaCorrecta = (j + 1).toString() === problema.Respuesta;
+                break;
             }
         }
         
@@ -160,14 +165,20 @@ async function ComprobarRespuesta(problema)
     }
     else
     {
-        if (bloque.TipoDeRespuesta === 'Abierta' && problema.hasOwnProperty('Aleatorio') && problema.Aleatorio && await Simplificar(document.getElementById('input ' + problema.id).value) === 'La fórmula no se pudo evaluar')
+        let outputTexto;
+        if (respuestaRecibida === '')
         {
-            document.getElementById('outputRespuesta ' + problema.id).textContent = 'La fórmula no se pudo evaluar';
+            outputTexto = 'Llene el campo de respuesta';
+        }
+        else if (bloque.TipoDeRespuesta === 'Abierta' && problema.hasOwnProperty('Aleatorio') && problema.Aleatorio && respuestaRecibida === 'La fórmula no se pudo evaluar')
+        {
+            outputTexto = 'La fórmula no se pudo evaluar';
         }
         else
         {
-            document.getElementById('outputRespuesta ' + problema.id).textContent = 'Incorrecto';
+            outputTexto = 'Incorrecto';
         }
+        document.getElementById('outputRespuesta ' + problema.id).textContent = outputTexto;
     }
 }
 
