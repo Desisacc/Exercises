@@ -44,6 +44,22 @@ app.get('/Evaluate/:formula', (req, res) => {
     res.send({ "resultado": resultado.toString() });
 })
 
+app.get('/EvaluateMany/:formulas', (req, res) => {
+    const { formulas } = req.params;
+
+    let individualFormulas = formulas.split('|');
+    for (let i = 0; i < individualFormulas.length; i++)
+    {
+        try {
+            individualFormulas[i] = simplify(individualFormulas[i]).toString();
+        } catch(error) {
+            throw new Error('Element with index: ' + i.toString() + ', with value: ' + individualFormulas[i] + ' could not be simplified');
+        }
+    }
+
+    res.send({ "resultado": individualFormulas });
+})
+
 // Formateo //
 
 app.get('/tabla.js', (req, res) => {
