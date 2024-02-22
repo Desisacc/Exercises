@@ -1,5 +1,5 @@
 import { ObtenerBloque, ObtenerProblemasDeBloque } from '/tabla.js'
-import { Simplificar } from '/formateo.js'
+import { Simplificar, SimplificarMultiples } from '/formateo.js'
 
 let contenedorProblemas = document.getElementById('contenedorProblemas');
 
@@ -239,9 +239,7 @@ async function GenerarValoresDeProblema(problema)
         }
     }
 
-    problema.Respuesta = await Simplificar(problema.Respuesta);
-    for (let k = 0; k < problema.FormulaValoresExplicacion.length; k++)
-    {
-        problema.ValoresExplicacion[k] = await Simplificar(problema.ValoresExplicacion[k]);
-    }
+    let formulasSimplificadas = await SimplificarMultiples([ problema.Respuesta ].concat(problema.ValoresExplicacion));
+    problema.Respuesta = formulasSimplificadas[0];
+    problema.ValoresExplicacion = formulasSimplificadas.slice(1);
 }
