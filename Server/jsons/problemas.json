@@ -1,6 +1,7 @@
 [
 {
     "id": "77d61819-d052-4219-bb2c-1fa6bc04ed79",
+    "Imagen": "https://i.postimg.cc/2j4qrCPH/Ln-Rr-Yf6e-400x400.jpg",
     "Aleatorio": true,
     "RangoDeValoresAleatorios": [[1, 4], [2, 3]],
     "FormulaRespuesta": "[1] * [0] * x ^ ([1]-1)",
@@ -25,8 +26,16 @@
 
 {
     "id": "f6b10d34-bcb9-401f-a5e7-69b643639200",
+    "Imagen": "https://i.postimg.cc/hPbjYTJd/1000-F-65218950-8g-Ggy60-Q1-BFQvz13-RLAJOCBtyd-Fw-Jx-FH.jpg",
     "Respuesta": "1",
     "Opciones": ["Elemento más común", "Suma de los elementos dividido entre la cantidad de los elementos"],
+    "Bloque": "38426e75-6bf3-433e-b827-1993b29b3a7a"
+},
+{
+    "id": "67e4e293-3cee-4039-a28c-982d589854f9",
+    "Respuesta": "1",
+    "OpcionConImagen": true,
+    "Opciones": ["https://i.postimg.cc/2j4qrCPH/Ln-Rr-Yf6e-400x400.jpg", "https://i.postimg.cc/hPbjYTJd/1000-F-65218950-8g-Ggy60-Q1-BFQvz13-RLAJOCBtyd-Fw-Jx-FH.jpg"],
     "Bloque": "38426e75-6bf3-433e-b827-1993b29b3a7a"
 }
 ]

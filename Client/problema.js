@@ -19,6 +19,14 @@ for (let i = 0; i < problemas.length; i++)
         await GenerarValoresDeProblema(problema);
     }
 
+    // Imagen
+    if (problema.hasOwnProperty('Imagen'))
+    {
+        let imagen = document.createElement('img');
+        imagen.src = problema.Imagen;
+        contenedorProblemas.appendChild(imagen);
+    }
+
     // Descripción
     let descripcion = document.createElement('p');
     descripcion.textContent = EscribirDescripcion(problema);
@@ -33,6 +41,7 @@ for (let i = 0; i < problemas.length; i++)
         input.id = 'input ' + problema.id;
         contenedorProblemas.appendChild(input);
 
+        // Añadir botón de reset para problemas aleatorios
         if (problema.hasOwnProperty('Aleatorio') && problema.Aleatorio)
         {
             let botonReset = document.createElement('button');
@@ -69,12 +78,24 @@ for (let i = 0; i < problemas.length; i++)
             radioBoton.type = 'radio';
             radioBoton.name = problema.id;
             radioBoton.id = 'radioBoton ' + j + ' ' + problema.id;
-
-            let textoDeBoton = document.createElement('span');
-            textoDeBoton.textContent = problema.Opciones[j];
-
             contenedorProblemas.appendChild(radioBoton);
-            contenedorProblemas.appendChild(textoDeBoton);
+
+            let labelDeBoton = document.createElement('label');
+            labelDeBoton.htmlFor = radioBoton.id;
+            contenedorProblemas.appendChild(labelDeBoton);
+
+            // Utilizar imágenes si el problema tiene habilitada la opción
+            if (problema.hasOwnProperty('OpcionConImagen') && problema.OpcionConImagen)
+            {
+                let imagen = document.createElement('img');
+                imagen.src = problema.Opciones[j];
+                labelDeBoton.appendChild(imagen);
+            }
+            else
+            {
+                labelDeBoton.textContent = problema.Opciones[j];
+            }
+
             contenedorProblemas.appendChild(document.createElement('br'));
         }
     }
